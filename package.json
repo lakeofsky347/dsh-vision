@@ -1,7 +1,7 @@
 {
   "name": "dsh-vision",
   "version": "0.1.0",
-  "description": "Vision Bridge for DeepSeek Harness: routes attached images to a vision-capable model (default xiaomi/mimo-v2-omni) and feeds the text description back to text-only routed models such as DeepSeek.",
+  "description": "Vision Bridge plugin for the DeepSeek Harness: routes attached images to a vision-capable model (default xiaomi/mimo-v2-omni) and feeds the text description back to text-only routed models such as DeepSeek.",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,22 +10,47 @@
       "types": "./lib/index.d.ts",
       "default": "./lib/index.js"
     },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
   "files": [
     "lib/index.js",
-    "lib/index.d.ts"
+    "lib/index.d.ts",
+    "cordis.patch.yml"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
+    "prepare": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lakeofsky347/dsh-vision.git"
   },
   "license": "MIT",
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6"
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1"
   },
   "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1",
     "esbuild": "^0.25.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

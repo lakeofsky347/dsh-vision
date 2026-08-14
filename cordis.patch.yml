@@ -1,0 +1,11 @@
+# dsh-vision bundle patch: the configuration layer applied when a profile
+# lists this bundle in `dsh.profile.bundles`. It inserts the vision bridge
+# row over the profile root; the plugin's Schemastery Config schema carries
+# the neutral defaults (provider xiaomi / model mimo-v2-omni / prompt / cache).
+#
+# Deployments override per-row in their own cordis.patch.yml — a patch
+# replaces the targeted row's whole `config` value rather than deep-merging
+# keys, so restate every key a row needs when overriding.
+- insert:
+    - id: vision
+      name: dsh-vision

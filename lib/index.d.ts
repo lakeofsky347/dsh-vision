@@ -4,6 +4,7 @@
  */
 import type { Context } from '@deepseek-ai/cordis'
 import type { ContentBlock, GenerateOptions, StreamChunk } from '@deepseek-ai/dsh-llm'
+import type Schema from '@deepseek-ai/schemastery'
 
 /** Plugin identity. */
 export declare const name: 'dsh-vision'
@@ -31,6 +32,9 @@ export interface ResolvedConfig {
   maxTokens?: number
 }
 
+/** Cordis/Schemastery config schema; validates the row's `config` and fills defaults. */
+export declare const Config: Schema<ResolvedConfig>
+
 /** Build the one-shot vision-model request carrying the image blocks plus the prompt. */
 export declare function visionRequest(cfg: ResolvedConfig, images: ContentBlock[]): GenerateOptions
 
@@ -42,7 +46,7 @@ export declare function collectText(stream: AsyncIterable<StreamChunk>): Promise
  * session + attachment ids. Failures degrade to a text placeholder.
  */
 export declare function describeImages(
-  ctx: Context,
+  llm: Pick<Context['llm'], 'stream'>,
   cfg: ResolvedConfig,
   cache: Map<string, string>,
   ours: WeakSet<GenerateOptions>,

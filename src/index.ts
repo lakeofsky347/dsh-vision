@@ -45,8 +45,9 @@ import {
   type Message,
   type StreamChunk,
 } from '@deepseek-ai/dsh-llm'
+import Schema from '@deepseek-ai/schemastery'
 
-/** Plugin identity; the profile patch row mounts `@deepseek-ai/dsh-vision`. */
+/** Plugin identity; the bundle patch row mounts the package as `dsh-vision`. */
 export const name = 'dsh-vision'
 
 /** Plugin configuration; every field is optional. */
@@ -79,6 +80,19 @@ const DEFAULTS = {
     '请详细描述这张图片的内容，包括主体、文字、布局、颜色等可观察细节，供一个无法直接查看图片的纯文本模型理解。直接给出描述，不要客套。',
   cache: true,
 } as const
+
+/**
+ * Cordis/Schemastery config schema. The loader validates the row's `config`
+ * against this schema and fills defaults before `apply`; the resolved value
+ * carries every field except the optional `maxTokens`.
+ */
+export const Config: Schema<ResolvedConfig> = Schema.object({
+  provider: Schema.string().default(DEFAULTS.provider),
+  model: Schema.string().default(DEFAULTS.model),
+  prompt: Schema.string().default(DEFAULTS.prompt),
+  cache: Schema.boolean().default(DEFAULTS.cache),
+  maxTokens: Schema.number(),
+})
 
 /** Text block replacing image blocks inside a bridged message. */
 function descriptionBlock(description: string): ContentBlock {
