@@ -1,0 +1,31 @@
+{
+  "name": "dsh-vision",
+  "version": "0.1.0",
+  "description": "Vision Bridge for DeepSeek Harness: routes attached images to a vision-capable model (default xiaomi/mimo-v2-omni) and feeds the text description back to text-only routed models such as DeepSeek.",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/index.d.ts"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
